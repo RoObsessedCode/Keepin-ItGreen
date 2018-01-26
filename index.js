@@ -44,7 +44,7 @@ function checkUser(username) {
       const commitDay = new Date(commitMinus6).getDate()
       const commitMonth = new Date(commitDay).getMonth()
 
-      if (nowDay !== commitDay && nowMonth !== nowDay) console.log(username, 'no commits today!')
+      if (nowDay !== commitDay && nowMonth !== commitMonth) console.log(username, 'no commits today!')
       else console.log(username, 'commited today')
     })
   })
