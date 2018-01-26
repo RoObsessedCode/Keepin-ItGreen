@@ -7,14 +7,16 @@
 */
 
 var https = require('https')
-var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark', 'WaleJeg']
+// var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark']
+var usernames = ['alaq', 'alexv']
 
 function checkUser(username) {
   var options = {
     host: 'api.github.com',
     path: '/users/' + username + '/events',
     method: 'GET',
-    headers: { 'user-agent': 'node.js' }
+    headers: { 'user-agent': 'node.js' },
+    auth: 'username:password' // fill your credentials here
   }
 
   var request = https.request(options, function(response) {
@@ -25,42 +27,29 @@ function checkUser(username) {
 
     response.on('end', function() {
       var gitUserInfo = JSON.parse(body)[0]
-      console.log(username)
+      // if (Array.isArray(gitUserInfo) === 'object') console.log(username)
       var dateCreated = gitUserInfo.created_at
       var parseDateCreated = dateCreated.split('-')
       var createdAtMonth = parseDateCreated[1]
       var createdAtDay = parseDateCreated[2].slice(0, 2)
       var createdAtFinal = parseInt(createdAtMonth + createdAtDay)
 
-      var monthsInYear = {
-        Jan: '1',
-        Feb: '2',
-        Mar: '3',
-        Apr: '4',
-        May: '5',
-        Jun: '6',
-        Jul: '7',
-        Aug: '8',
-        Sep: '9',
-        Oct: '10',
-        Nov: '11',
-        Dec: '12'
-      }
+      const now = new Date().getTime()
+      const nowMinus6 = now - 6 * 60 * 60
+      const nowDay = new Date(nowMinus6).getDate()
+      const nowMonth = new Date(nowDay).getMonth()
 
-      var time = new Date().getTime()
-      var date = new Date(time)
-      var todayDate = date.toString()
-      var todayParse = todayDate.split(' ')
-      var currentDay = todayParse[2]
-      var currentMonthWord = todayParse[1]
-      var currentMonthNum = monthsInYear[currentMonthWord]
-      var currentMonthFinal = currentMonthWord + currentDay
-      var currentDateFinal = parseInt(currentMonthNum + currentDay)
+      const commit = new Date(dateCreated).getTime()
+      const commitMinus6 = commit - 6 * 60 * 60
+      const commitDay = new Date(commitMinus6).getDate()
+      const commitMonth = new Date(commitDay).getMonth()
 
-      var latestCommitDateMatchesTodaysDate = currentDateFinal === createdAtFinal
-
-      console.log(username, 'commited today', latestCommitDateMatchesTodaysDate)
+      if (nowDay !== commitDay && nowMonth !== nowDay) console.log(username, 'no commits today!')
+      else console.log(username, 'commited today')
     })
+  })
+  request.on('error', error => {
+    console.log('error: ', error)
   })
   request.end()
 }
