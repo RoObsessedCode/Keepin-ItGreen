@@ -30,7 +30,6 @@ var request = https.request(options, function(response) {
     var createdAtDay = parseDateCreated[2].slice(0, 2);
     var createdAtFinal = parseInt(createdAtMonth + createdAtDay);
 
-
     var monthsInYear = {
       Jan: "1",
       Feb: "2",
@@ -57,8 +56,6 @@ var request = https.request(options, function(response) {
     var currentDateFinal = parseInt(currentMonthNum + currentDay);
 
     var latestCommitDateMatchesTodaysDate = currentDateFinal === createdAtFinal;
-
-
 
     console.log("moment of trrrruubaby: ", latestCommitDateMatchesTodaysDate );
   });
