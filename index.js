@@ -26,13 +26,7 @@ function checkUser(username) {
     })
 
     response.on('end', function() {
-      var gitUserInfo = JSON.parse(body)[0]
-      // if (Array.isArray(gitUserInfo) === 'object') console.log(username)
-      var dateCreated = gitUserInfo.created_at
-      var parseDateCreated = dateCreated.split('-')
-      var createdAtMonth = parseDateCreated[1]
-      var createdAtDay = parseDateCreated[2].slice(0, 2)
-      var createdAtFinal = parseInt(createdAtMonth + createdAtDay)
+      const dateCreated = JSON.parse(body)[0].created_at
 
       const now = new Date().getTime()
       const nowMinus6 = now - 6 * 60 * 60
