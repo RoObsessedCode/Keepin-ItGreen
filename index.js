@@ -7,7 +7,7 @@
 */
 
 var https = require('https')
-var usernames = ['alaq', 'alexv']
+var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark', 'WaleJeg']
 
 function checkUser(username) {
   var options = {
@@ -25,6 +25,7 @@ function checkUser(username) {
 
     response.on('end', function() {
       var gitUserInfo = JSON.parse(body)[0]
+      console.log(username)
       var dateCreated = gitUserInfo.created_at
       var parseDateCreated = dateCreated.split('-')
       var createdAtMonth = parseDateCreated[1]
@@ -61,7 +62,6 @@ function checkUser(username) {
       console.log(username, 'commited today', latestCommitDateMatchesTodaysDate)
     })
   })
-
   request.end()
 }
 
