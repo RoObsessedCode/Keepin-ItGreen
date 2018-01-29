@@ -15,8 +15,8 @@ function checkUser(username) {
     host: 'api.github.com',
     path: '/users/' + username + '/events',
     method: 'GET',
-    headers: { 'user-agent': 'node.js' },
-    auth: 'alaq:silver3' // fill your credentials here, if you've hit the limit
+    headers: { 'user-agent': 'node.js' }
+    // auth: 'username:password' // fill your credentials here, if you've hit the limit
   }
 
   const request = https.request(options, function(response) {
