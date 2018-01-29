@@ -8,7 +8,7 @@
 
 var https = require('https')
 var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark', 'walejegs', 'roobsessedcode', 'xifengjin88']
-// var usernames = ['roobsessedcode']
+let guiltyPeople = ['']
 
 function checkUser(username) {
   const options = {
@@ -35,8 +35,10 @@ function checkUser(username) {
       const nowMonth = new Date(nowDay).getMonth()
       const commitMonth = new Date(commitDay).getMonth()
 
-      if (nowDay !== commitDay || nowMonth !== commitMonth) console.log(username, 'no commits today!')
-      else console.log(username, 'commited today')
+      if (nowDay !== commitDay || nowMonth !== commitMonth) {
+        console.log(username)
+        guiltyPeople.push(username)
+      }
     })
   })
 
@@ -46,4 +48,8 @@ function checkUser(username) {
   request.end()
 }
 
-usernames.forEach(user => checkUser(user))
+for (let i = 0; i < usernames.length; i++) {
+  checkUser(usernames[i])
+}
+
+console.log(guiltyPeople)
