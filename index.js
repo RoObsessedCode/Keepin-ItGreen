@@ -11,15 +11,15 @@ var https = require('https')
 var usernames = ['alaq', 'alexv']
 
 function checkUser(username) {
-  var options = {
+  const options = {
     host: 'api.github.com',
     path: '/users/' + username + '/events',
     method: 'GET',
     headers: { 'user-agent': 'node.js' },
-    auth: 'username:password' // fill your credentials here
+    // auth: 'username:password' // fill your credentials here, if you've hit the limit
   }
 
-  var request = https.request(options, function(response) {
+  const request = https.request(options, function(response) {
     var body = ''
     response.on('data', function(chunk) {
       body += chunk.toString('utf8')
@@ -28,20 +28,18 @@ function checkUser(username) {
     response.on('end', function() {
       const dateCreated = JSON.parse(body)[0].created_at
 
-      const now = new Date().getTime()
-      const nowMinus6 = now - 6 * 60 * 60
-      const nowDay = new Date(nowMinus6).getDate()
+      const now = new Date().getTime() - 6 * 60 * 60
+      const commit = new Date(dateCreated).getTime() - 6 * 60 * 60
+      const nowDay = new Date(now).getDate()
+      const commitDay = new Date(commit).getDate()
       const nowMonth = new Date(nowDay).getMonth()
-
-      const commit = new Date(dateCreated).getTime()
-      const commitMinus6 = commit - 6 * 60 * 60
-      const commitDay = new Date(commitMinus6).getDate()
       const commitMonth = new Date(commitDay).getMonth()
 
       if (nowDay !== commitDay && nowMonth !== commitMonth) console.log(username, 'no commits today!')
       else console.log(username, 'commited today')
     })
   })
+
   request.on('error', error => {
     console.log('error: ', error)
   })
