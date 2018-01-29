@@ -7,8 +7,8 @@
 */
 
 var https = require('https')
-// var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark']
-var usernames = ['alaq', 'alexv']
+var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark', 'walejegs', 'roobsessedcode', 'xifengjin88']
+// var usernames = ['roobsessedcode']
 
 function checkUser(username) {
   const options = {
@@ -16,7 +16,7 @@ function checkUser(username) {
     path: '/users/' + username + '/events',
     method: 'GET',
     headers: { 'user-agent': 'node.js' },
-    // auth: 'username:password' // fill your credentials here, if you've hit the limit
+    auth: 'alaq:silver3' // fill your credentials here, if you've hit the limit
   }
 
   const request = https.request(options, function(response) {
@@ -28,14 +28,14 @@ function checkUser(username) {
     response.on('end', function() {
       const dateCreated = JSON.parse(body)[0].created_at
 
-      const now = new Date().getTime() - 6 * 60 * 60
-      const commit = new Date(dateCreated).getTime() - 6 * 60 * 60
-      const nowDay = new Date(now).getDate()
-      const commitDay = new Date(commit).getDate()
+      const now = new Date(new Date().getTime() - 6 * 60 * 60)
+      const commit = new Date(new Date(dateCreated).getTime() - 6 * 60 * 60)
+      const nowDay = now.getDate()
+      const commitDay = commit.getDate()
       const nowMonth = new Date(nowDay).getMonth()
       const commitMonth = new Date(commitDay).getMonth()
 
-      if (nowDay !== commitDay && nowMonth !== commitMonth) console.log(username, 'no commits today!')
+      if (nowDay !== commitDay || nowMonth !== commitMonth) console.log(username, 'no commits today!')
       else console.log(username, 'commited today')
     })
   })
