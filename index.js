@@ -8,7 +8,8 @@
 
 var https = require('https')
 var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark', 'walejegs', 'roobsessedcode', 'xifengjin88']
-let guiltyPeople = ['']
+let guiltyPeople = []
+let processed = 0
 
 function checkUser(username) {
   const options = {
@@ -39,6 +40,11 @@ function checkUser(username) {
         console.log(username)
         guiltyPeople.push(username)
       }
+
+      processed++
+      if (processed === usernames.length - 1) {
+        shamePeople()
+      }
     })
   })
 
@@ -48,8 +54,10 @@ function checkUser(username) {
   request.end()
 }
 
+function shamePeople() {
+  console.log('shame', guiltyPeople)
+}
+
 for (let i = 0; i < usernames.length; i++) {
   checkUser(usernames[i])
 }
-
-console.log(guiltyPeople)
