@@ -56,6 +56,43 @@ function checkUser(username) {
 
 function shamePeople() {
   console.log('shame', guiltyPeople)
+
+  const postData =
+    'payload=' +
+    JSON.stringify({
+      text: 'hello there',
+      username: 'stakhanov'
+    })
+
+  var options = {
+    host: 'hooks.slack.com',
+    method: 'POST',
+    path: '/services/T024FPYBQ/B90GRC1T7/kqPucPHf49hBl0tEY8KWzbQS',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': postData.length
+    }
+  }
+
+  var req = https.request(options, function(res) {
+    var result = ''
+    res.on('data', function(chunk) {
+      result += chunk
+    })
+    res.on('end', function() {
+      console.log(result)
+    })
+    res.on('error', function(err) {
+      console.log(err)
+    })
+  })
+
+  req.on('error', function(err) {
+    console.log(err)
+  })
+
+  req.write(postData)
+  req.end()
 }
 
 for (let i = 0; i < usernames.length; i++) {
