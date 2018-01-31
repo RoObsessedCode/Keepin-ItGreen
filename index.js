@@ -38,7 +38,12 @@ function checkUser(username) {
     })
 
     response.on('end', function() {
-      const dateCreated = JSON.parse(body)[0].created_at
+      const json = JSON.parse(body)
+
+      let commitIndex = 0
+      while (json[commitIndex].type !== 'PushEvent') commitIndex++
+
+      const dateCreated = json[0].created_at
 
       const now = new Date(new Date().getTime() - 6 * 60 * 60)
       const commit = new Date(new Date(dateCreated).getTime() - 6 * 60 * 60)
