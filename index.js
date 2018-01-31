@@ -8,18 +8,6 @@
 
 const https = require('https')
 
-// Username archive
-// var usernames = [
-//   'alaq',
-//   'alexv',
-//   'michaelromani',
-//   'freshbreadlux',
-//   'solpark',
-//   'walejegs',
-//   'roobsessedcode',
-//   'xifengjin88'
-// ]
-
 var usernames = [
   { github: 'alaq', slack: 'U70HAMX6C' },
   { github: 'alexv', slack: 'U715C1DH9' },
@@ -99,8 +87,6 @@ function shamePeople() {
     'payload=' +
     JSON.stringify({
       text: text
-      // username: 'stakhanov',
-      // icon_emoji: 'stakhanov'
     })
 
   var options = {
