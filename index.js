@@ -22,9 +22,13 @@ const https = require('https')
 
 var usernames = [
   { github: 'alaq', slack: 'U70HAMX6C' },
-  { github: 'alexv', slack: 'Alex Villarreal' },
-  { github: 'michaelromani', slack: 'Mike Romani' },
-  { github: 'de33', slack: 'USOMETHING' }
+  { github: 'alexv', slack: 'U715C1DH9' },
+  { github: 'michaelromani', slack: 'U70JBEN2U' },
+  { github: 'roobsessedcode', slack: 'U71BS7YA1' },
+  { github: 'freshbreadlux', slack: 'U71BSAE05' },
+  { github: 'solpark', slack: 'U724CU230' },
+  { github: 'xifengjin88', slack: 'U6NDS7020' },
+  { github: '' }
 ]
 let guiltyPeople = []
 let processed = 0
@@ -75,9 +79,9 @@ function checkUser(username) {
 function shamePeople() {
   let text = ''
   // let's go through the three cases, no one, or someome, or many have not commited
-  if (!guiltyPeople.length)
+  if (!guiltyPeople.length) {
     text = 'Everyone has commited today! I am proud of my comrades!'
-  else {
+  } else {
     // random intro
     text = 'Shame! '
     // Adding the name of the people
@@ -130,11 +134,7 @@ function shamePeople() {
 }
 
 function githubToSlackUsernames(githubUser) {
-  return (
-    '<@' +
-    usernames.filter(person => person.github === githubUser)[0].slack +
-    '>'
-  )
+  return '<@' + usernames.filter(person => person.github === githubUser)[0].slack + '>'
 }
 
 for (let i = 0; i < usernames.length; i++) {
