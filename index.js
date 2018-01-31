@@ -23,7 +23,8 @@ const https = require('https')
 var usernames = [
   { github: 'alaq', slack: 'Adrien Lacquemant' },
   { github: 'alexv', slack: 'Alex Villarreal' },
-  { github: 'michaelromani', slack: 'Mike Romani' }
+  { github: 'michaelromani', slack: 'Mike Romani' },
+  { github: 'de33', slack: 'Some Person' }
 ]
 let guiltyPeople = []
 let processed = 0
@@ -54,8 +55,7 @@ function checkUser(username) {
       const commitMonth = new Date(commitDay).getMonth()
 
       if (nowDay !== commitDay || nowMonth !== commitMonth) {
-        console.log(username)
-        guiltyPeople.push(username)
+        guiltyPeople.push(githubToSlackUsernames(username))
       }
 
       processed++
@@ -118,4 +118,4 @@ function githubToSlackUsernames(githubUser) {
 
 for (let i = 0; i < usernames.length; i++) {
   checkUser(usernames[i].github)
-// }
+}
