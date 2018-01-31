@@ -86,7 +86,8 @@ function shamePeople() {
   const postData =
     'payload=' +
     JSON.stringify({
-      text: text
+      text: text,
+      channel: '#1801-fsa-ny-fellows'
     })
 
   var options = {

@@ -2,12 +2,13 @@ const https = require('https')
 
 function message() {
   let text =
-    "Privet! I am Stakhanov, stackabot's Russian cousin. In Soviet Russia, I am celebrity. You can read about Stakhanov on Imperialist US website Wikipedia <https://en.wikipedia.org/wiki/Alexey_Stakhanov>. There you can learn about stakhanovist movement. Today and tomorrow I want you all to be stakhanovists... with your commits, for the glory of the people! But dare you forget to commit and make Stakhanov angry, I will publicly shame you, or worse!"
+    "Privet! I am Stakhanov, stackabot's Russian cousin. In Soviet Russia, I am celebrity. You can read about Stakhanov on Imperialist US website Wikipedia <https://en.wikipedia.org/wiki/Alexey_Stakhanov>. There you can learn about stakhanovist movement. Today and tomorrow I want you all fellows to be stakhanovists... with your commits, for the glory of the people! But dare you forget to commit and make Stakhanov angry, I will publicly shame you, or worse!"
 
   const postData =
     'payload=' +
     JSON.stringify({
-      text: text
+      text: text,
+      channel: '#1801-fsa-ny-fellows'
     })
 
   var options = {
