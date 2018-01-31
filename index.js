@@ -24,7 +24,7 @@ var usernames = [
   { github: 'alaq', slack: 'Adrien Lacquemant' },
   { github: 'alexv', slack: 'Alex Villarreal' },
   { github: 'michaelromani', slack: 'Mike Romani' },
-  { github: 'de33', slack: 'Some Person' }
+  { github: 'de33', slack: 'Adrien Lacquemant' }
 ]
 let guiltyPeople = []
 let processed = 0
@@ -72,12 +72,28 @@ function checkUser(username) {
 }
 
 function shamePeople() {
-  console.log('shame', guiltyPeople)
+  let text = ''
+  // let's go through the three cases, no one, or someome, or many have not commited
+  if (!guiltyPeople.length)
+    text = 'Everyone has commited today! I am proud of my comrades!'
+  else {
+    // random intro
+    text = 'Shame! @'
+    // Adding the name of the people
+    text += guiltyPeople.join(', @')
+
+    // has or have
+    if (guiltyPeople.length === 1) text += ' has'
+    else text += ' have'
+
+    // ramdom outro
+    text += ' not commited today! Stakhanov is sad...'
+  }
 
   const postData =
     'payload=' +
     JSON.stringify({
-      text: 'hello there',
+      text: text,
       username: 'stakhanov'
     })
 
