@@ -7,7 +7,21 @@
 */
 
 var https = require('https')
-var usernames = ['alaq', 'alexv', 'michaelromani', 'freshbreadlux', 'solpark', 'walejegs', 'roobsessedcode', 'xifengjin88']
+var usernames = [
+  'alaq',
+  'alexv',
+  'michaelromani',
+  'freshbreadlux',
+  'solpark',
+  'walejegs',
+  'roobsessedcode',
+  'xifengjin88'
+]
+var usernames = [
+  { github: 'alaq', slack: 'Adrien Lacquemant' },
+  { github: 'alexv', slack: 'Alex Villarreal' },
+  { github: 'michaelromani', slack: 'Mike Romani' }
+]
 let guiltyPeople = []
 let processed = 0
 
