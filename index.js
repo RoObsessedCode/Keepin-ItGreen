@@ -16,7 +16,8 @@ var usernames = [
   { github: 'freshbreadlux', slack: 'U71BSAE05' },
   { github: 'solpark', slack: 'U724CU230' },
   { github: 'xifengjin88', slack: 'U6NDS7020' },
-  { github: 'walejegs', slack: 'U6NFWHF61' }
+  { github: 'walejegs', slack: 'U6NFWHF61' },
+  { github: 'gtelljohann', slack: 'U02T807LT' }
 ]
 let guiltyPeople = []
 let processed = 0
@@ -27,7 +28,7 @@ function checkUser(username) {
     path: '/users/' + username + '/events',
     method: 'GET',
     headers: { 'user-agent': 'node.js' },
-    auth: 'roobsessedcode:st33l3rs' // fill your credentials here, if you've hit the limit
+    auth: 'fullstakhanov:stakhanov1913' // fill your credentials here, if you've hit the limit
   }
 
   const request = https.request(options, function(response) {
@@ -86,9 +87,9 @@ function shamePeople() {
   const postData =
     'payload=' +
     JSON.stringify({
-      text: text,
-      channel: '#1801-fsa-ny-fellows'
+      text: text
     })
+  // channel: '#1801-fsa-ny-fellows'
 
   var options = {
     host: 'hooks.slack.com',
