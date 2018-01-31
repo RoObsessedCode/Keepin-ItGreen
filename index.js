@@ -28,7 +28,7 @@ var usernames = [
   { github: 'freshbreadlux', slack: 'U71BSAE05' },
   { github: 'solpark', slack: 'U724CU230' },
   { github: 'xifengjin88', slack: 'U6NDS7020' },
-  { github: '' }
+  { github: 'walejegs', slack: 'U6NFWHF61' }
 ]
 let guiltyPeople = []
 let processed = 0
@@ -38,8 +38,8 @@ function checkUser(username) {
     host: 'api.github.com',
     path: '/users/' + username + '/events',
     method: 'GET',
-    headers: { 'user-agent': 'node.js' }
-    // auth: 'username:password' // fill your credentials here, if you've hit the limit
+    headers: { 'user-agent': 'node.js' },
+    auth: 'roobsessedcode:st33l3rs' // fill your credentials here, if you've hit the limit
   }
 
   const request = https.request(options, function(response) {
@@ -64,7 +64,7 @@ function checkUser(username) {
       }
 
       processed++
-      if (processed === usernames.length - 1) {
+      if (processed === usernames.length) {
         shamePeople()
       }
     })
@@ -80,7 +80,7 @@ function shamePeople() {
   let text = ''
   // let's go through the three cases, no one, or someome, or many have not commited
   if (!guiltyPeople.length) {
-    text = 'Everyone has commited today! I am proud of my comrades!'
+    text = 'Privet! Everyone has commited today! I am proud of my comrades!'
   } else {
     // random intro
     text = 'Shame! '
@@ -92,14 +92,15 @@ function shamePeople() {
     else text += ' have'
 
     // ramdom outro
-    text += ' not commited today! Stakhanov is sad...'
+    text += ' not commited today! This makes Stakhanov angry!'
   }
 
   const postData =
     'payload=' +
     JSON.stringify({
-      text: text,
-      username: 'stakhanov'
+      text: text
+      // username: 'stakhanov',
+      // icon_emoji: 'stakhanov'
     })
 
   var options = {
