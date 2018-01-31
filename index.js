@@ -21,10 +21,10 @@ const https = require('https')
 // ]
 
 var usernames = [
-  { github: 'alaq', slack: 'Adrien Lacquemant' },
+  { github: 'alaq', slack: 'U70HAMX6C' },
   { github: 'alexv', slack: 'Alex Villarreal' },
   { github: 'michaelromani', slack: 'Mike Romani' },
-  { github: 'de33', slack: 'Adrien Lacquemant' }
+  { github: 'de33', slack: 'USOMETHING' }
 ]
 let guiltyPeople = []
 let processed = 0
@@ -55,6 +55,7 @@ function checkUser(username) {
       const commitMonth = new Date(commitDay).getMonth()
 
       if (nowDay !== commitDay || nowMonth !== commitMonth) {
+        console.log(username + " didn't commit today")
         guiltyPeople.push(githubToSlackUsernames(username))
       }
 
@@ -78,9 +79,9 @@ function shamePeople() {
     text = 'Everyone has commited today! I am proud of my comrades!'
   else {
     // random intro
-    text = 'Shame! @'
+    text = 'Shame! '
     // Adding the name of the people
-    text += guiltyPeople.join(', @')
+    text += guiltyPeople.join(', ')
 
     // has or have
     if (guiltyPeople.length === 1) text += ' has'
@@ -129,7 +130,11 @@ function shamePeople() {
 }
 
 function githubToSlackUsernames(githubUser) {
-  return usernames.filter(person => person.github === githubUser)[0].slack
+  return (
+    '<@' +
+    usernames.filter(person => person.github === githubUser)[0].slack +
+    '>'
+  )
 }
 
 for (let i = 0; i < usernames.length; i++) {
