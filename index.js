@@ -6,17 +6,20 @@
 
 */
 
-var https = require('https')
-var usernames = [
-  'alaq',
-  'alexv',
-  'michaelromani',
-  'freshbreadlux',
-  'solpark',
-  'walejegs',
-  'roobsessedcode',
-  'xifengjin88'
-]
+const https = require('https')
+
+// Username archive
+// var usernames = [
+//   'alaq',
+//   'alexv',
+//   'michaelromani',
+//   'freshbreadlux',
+//   'solpark',
+//   'walejegs',
+//   'roobsessedcode',
+//   'xifengjin88'
+// ]
+
 var usernames = [
   { github: 'alaq', slack: 'Adrien Lacquemant' },
   { github: 'alexv', slack: 'Alex Villarreal' },
@@ -109,6 +112,10 @@ function shamePeople() {
   req.end()
 }
 
-for (let i = 0; i < usernames.length; i++) {
-  checkUser(usernames[i])
+function githubToSlackUsernames(githubUser) {
+  return usernames.filter(person => person.github === githubUser)[0].slack
 }
+
+for (let i = 0; i < usernames.length; i++) {
+  checkUser(usernames[i].github)
+// }
