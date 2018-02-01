@@ -2,6 +2,7 @@ const https = require('https')
 
 function message() {
   const text = process.argv.slice(2).join(' ')
+  if (!text.length) return
 
   const postData =
     'payload=' +
