@@ -1,15 +1,14 @@
 const https = require('https')
 
 function message() {
-  let text =
-    'I have added you to our kolkhoz, comrade <@U02T807LT>. Junior FSA fellows are already enlisted. Anyone else feeling the spirit of the Revolution can just reply to this thread! To read about kolkhoz: <https://en.wikipedia.org/wiki/Kolkhoz>'
+  const text = process.argv.slice(2).join(' ')
 
   const postData =
     'payload=' +
     JSON.stringify({
-      text: text,
-      channel: '#1801-fsa-ny-fellows'
+      text: text
     })
+  // channel: '#1801-fsa-ny-fellows'
 
   var options = {
     host: 'hooks.slack.com',
