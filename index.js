@@ -81,7 +81,10 @@ function shamePeople() {
   } else if (day === 0 || day === 6) {
     text +=
       "It's the week end! And still, " +
-      usernames.map(usernameObj => '<@' + usernameObj.slack + '>').join(', ') +
+      usernames
+        .map(usernameObj => '<@' + usernameObj.slack + '>')
+        .filter(slack => !guiltyPeople.includes(slack))
+        .join(', ') +
       ' have commited! Stakhanov is proud!'
   } else {
     // random intro
