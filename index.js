@@ -71,10 +71,21 @@ function checkUser(username) {
 }
 
 function shamePeople() {
+  const now2 = new Date(new Date().getTime() - 6 * 60 * 60)
+  const day = now2.getDay()
+  console.log(day)
   let text = ''
   // let's go through the three cases, no one, or someome, or many have not commited
   if (!guiltyPeople.length) {
     text = 'Privet! Everyone has commited today! I am proud of my comrades!'
+  } else if (day === 0 || day === 6) {
+    text +=
+      "It's the week end! And still, " +
+      usernames
+        .map(usernameObj => '<@' + usernameObj.slack + '>')
+        .filter(slack => !guiltyPeople.includes(slack))
+        .join(', ') +
+      ' have commited! Stakhanov is proud!'
   } else {
     // random intro
     text = 'Shame! '
@@ -128,7 +139,11 @@ function shamePeople() {
 }
 
 function githubToSlackUsernames(githubUser) {
-  return '<@' + usernames.filter(person => person.github === githubUser)[0].slack + '>'
+  return (
+    '<@' +
+    usernames.filter(person => person.github === githubUser)[0].slack +
+    '>'
+  )
 }
 
 for (let i = 0; i < usernames.length; i++) {
