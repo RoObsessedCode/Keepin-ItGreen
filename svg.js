@@ -47,7 +47,7 @@ function checkUser(username) {
       }
 
       line = line.split(/=|"| /)
-      const dataCount = line[line.indexOf('data-count') + 2]
+      const dataCount = +line[line.indexOf('data-count') + 2]
       console.log(username, dataCount)
 
       if (dataCount === 0) {
