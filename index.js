@@ -41,7 +41,7 @@ function checkUser(username) {
       const json = JSON.parse(body)
 
       let commitIndex = 0
-      while (json[commitIndex].type !== 'PushEvent' || json[commitIndex].type !== 'CreateEvent') commitIndex++
+      while (json[commitIndex].type !== 'PushEvent') commitIndex++
 
       const dateCreated = json[0].created_at
 
