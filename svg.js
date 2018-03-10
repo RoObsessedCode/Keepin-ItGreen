@@ -42,11 +42,13 @@ function checkUser(username) {
       let slice = body.slice(index - 150, index + 150)
       slice = slice.split('\n')
       let line
-      for (let i =0; i < slice.length; i++) {
+      for (let i = 0; i < slice.length; i++) {
         if (slice[i].indexOf(date) !== -1) line = slice[i]
       }
 
-      line = line.split('')
+      line = line.split(/=|"| /)
+      const dataCount = line[line.indexOf('data-count') + 2]
+      console.log(dataCount)
       // const json = JSON.parse(body)
       // let commitIndex = 0
       // while (json[commitIndex].type !== 'PushEvent') commitIndex++
