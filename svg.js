@@ -71,6 +71,10 @@ function shamePeople() {
   const now2 = new Date(new Date().getTime() - 6 * 60 * 60)
   const day = now2.getDay()
   console.log(day)
+
+  // has/have
+  const hasHave = guiltyPeople.length === 1 ? ' has' : ' have'
+
   let text = ''
   // let's go through the three cases, no one, or someome, or many have not commited
   if (!guiltyPeople.length) {
@@ -82,7 +86,8 @@ function shamePeople() {
         .map(usernameObj => '<@' + usernameObj.slack + '>')
         .filter(slack => !guiltyPeople.includes(slack))
         .join(', ') +
-      ' have commited! Stakhanov is proud!'
+      hasHave
+    ;(' commited! Stakhanov is proud!')
   } else {
     // random intro
     text = 'Shame! '
@@ -90,8 +95,7 @@ function shamePeople() {
     text += guiltyPeople.join(', ')
 
     // has or have
-    if (guiltyPeople.length === 1) text += ' has'
-    else text += ' have'
+    text += hasHave
 
     // ramdom outro
     text += ' not commited today! This makes Stakhanov angry!'
