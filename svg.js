@@ -9,8 +9,8 @@
 const https = require('https')
 
 var usernames = [
-  { github: 'alaq', slack: 'U70HAMX6C' }
-  // { github: 'alexv', slack: 'U715C1DH9' },
+  { github: 'alaq', slack: 'U70HAMX6C' },
+  { github: 'alexv', slack: 'U715C1DH9' }
   // { github: 'michaelromani', slack: 'U70JBEN2U' },
   // { github: 'roobsessedcode', slack: 'U71BS7YA1' },
   // { github: 'freshbreadlux', slack: 'U71BSAE05' },
@@ -151,6 +151,13 @@ function checkUser(username) {
 //     '>'
 //   )
 // }
+
+function makeDate() {
+  const now = new Date(new Date().getTime() - 6 * 60 * 60)
+  const month = ('0' + (now.getMonth() + 1)).slice(-2)
+  const day = ('0' + now.getDate()).slice(-2)
+  return now.getFullYear() + '-' + month + '-' + now.getDate()
+}
 
 for (let i = 0; i < usernames.length; i++) {
   checkUser(usernames[i].github)
