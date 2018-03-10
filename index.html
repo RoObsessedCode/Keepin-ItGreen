@@ -6,11 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script>
+    fetch('https://github.com/users/alaq/contributions', {
+      mode: 'no-cors' // 'cors' by default
+    })
+      .then(function (response) {
+        console.log(response)
+        document.getElementsByClassName('people')[0].innerHTML(response)
+      })
+  </script>
 </head>
 
 <body>
 
-  <img src="https://github.com/users/alaq/contributions" alt="" srcset="https://github.com/users/alaq/contributions">
+  <div class="people"></div>
 
 </body>
 

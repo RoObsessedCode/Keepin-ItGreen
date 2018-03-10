@@ -37,8 +37,16 @@ function checkUser(username) {
     })
 
     response.on('end', function() {
-      const index = body.indexOf('2018-03-09')
-      console.log(body.slice(index - 100, index + 15))
+      const date = '2018-03-09'
+      const index = body.indexOf(date)
+      let slice = body.slice(index - 150, index + 150)
+      slice = slice.split('\n')
+      let line
+      for (let i =0; i < slice.length; i++) {
+        if (slice[i].indexOf(date) !== -1) line = slice[i]
+      }
+
+      line = line.split('')
       // const json = JSON.parse(body)
       // let commitIndex = 0
       // while (json[commitIndex].type !== 'PushEvent') commitIndex++
