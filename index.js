@@ -40,7 +40,6 @@ function checkUser(username) {
 
       line = line.split(/=|"| /)
       const dataCount = +line[line.indexOf('data-count') + 2]
-      console.log(username, dataCount)
 
       if (dataCount === 0) {
         console.log(username + " didn't commit today")
@@ -65,7 +64,7 @@ function shamePeople() {
   console.log(day)
 
   let text = ''
-  // let's go through the three cases, no one, or someome, or many have not commited
+  // let's go through the three cases, no one, or someone, or many have not committed
   if (!guiltyPeople.length) {
     text = 'Privet! Everyone has committed today! I am proud of my comrades!'
   } else if (day === 0 || day === 6) {
@@ -139,7 +138,7 @@ function makeDate() {
   const now = new Date(new Date().getTime() - 6 * 60 * 60)
   const month = ('0' + (now.getMonth() + 1)).slice(-2)
   const day = ('0' + now.getDate()).slice(-2)
-  return now.getFullYear() + '-' + month + '-' + now.getDate()
+  return now.getFullYear() + '-' + month + '-' + day
 }
 
 function hasHave(array) {
