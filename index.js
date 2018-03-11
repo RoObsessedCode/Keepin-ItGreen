@@ -1,11 +1,3 @@
-/*
-1. Go to Github
-2. Fetch list of Github users
-3. Retrieve commit history of each user[JSON object]
-4. Compile a list of dates -> object with dates as keys. If today's not is not a key return true for that user. True meaning they have not committed and need to be publicly shamed
-
-*/
-
 const https = require('https')
 
 var usernames = [
@@ -24,11 +16,10 @@ let processed = 0
 
 function checkUser(username) {
   const options = {
-    host: 'api.github.com',
-    path: '/users/' + username + '/events',
+    host: 'github.com',
+    path: '/users/' + username + '/contributions',
     method: 'GET',
-    headers: { 'user-agent': 'node.js' },
-    auth: 'fullstakhanov:stakhanov1913' // fill your credentials here, if you've hit the limit
+    headers: { 'user-agent': 'node.js' }
   }
 
   const request = https.request(options, function(response) {
@@ -38,25 +29,23 @@ function checkUser(username) {
     })
 
     response.on('end', function() {
-      const json = JSON.parse(body)
+      const date = makeDate()
+      const index = body.indexOf(date)
+      let slice = body.slice(index - 150, index + 150)
+      slice = slice.split('\n')
+      let line
+      for (let i = 0; i < slice.length; i++) {
+        if (slice[i].indexOf(date) !== -1) line = slice[i]
+      }
 
-      let commitIndex = 0
-      while (json[commitIndex].type !== 'PushEvent') commitIndex++
+      line = line.split(/=|"| /)
+      const dataCount = +line[line.indexOf('data-count') + 2]
+      console.log(username, dataCount)
 
-      const dateCreated = json[0].created_at
-
-      const now = new Date(new Date().getTime() - 6 * 60 * 60)
-      const commit = new Date(new Date(dateCreated).getTime() - 6 * 60 * 60)
-      const nowDay = now.getDate()
-      const commitDay = commit.getDate()
-      const nowMonth = new Date(nowDay).getMonth()
-      const commitMonth = new Date(commitDay).getMonth()
-
-      if (nowDay !== commitDay || nowMonth !== commitMonth) {
+      if (dataCount === 0) {
         console.log(username + " didn't commit today")
         guiltyPeople.push(githubToSlackUsernames(username))
       }
-
       processed++
       if (processed === usernames.length) {
         shamePeople()
@@ -74,18 +63,23 @@ function shamePeople() {
   const now2 = new Date(new Date().getTime() - 6 * 60 * 60)
   const day = now2.getDay()
   console.log(day)
+
   let text = ''
   // let's go through the three cases, no one, or someome, or many have not commited
   if (!guiltyPeople.length) {
-    text = 'Privet! Everyone has commited today! I am proud of my comrades!'
+    text = 'Privet! Everyone has committed today! I am proud of my comrades!'
   } else if (day === 0 || day === 6) {
+    let hasv = hasHave(
+      usernames.map(usernameObj => '<@' + usernameObj.slack + '>').filter(slack => !guiltyPeople.includes(slack))
+    )
     text +=
       "It's the week end! And still, " +
       usernames
         .map(usernameObj => '<@' + usernameObj.slack + '>')
         .filter(slack => !guiltyPeople.includes(slack))
         .join(', ') +
-      ' have commited! Stakhanov is proud!'
+      hasv +
+      ' committed! Stakhanov is proud!'
   } else {
     // random intro
     text = 'Shame! '
@@ -93,11 +87,10 @@ function shamePeople() {
     text += guiltyPeople.join(', ')
 
     // has or have
-    if (guiltyPeople.length === 1) text += ' has'
-    else text += ' have'
+    text += hasHave(guiltyPeople)
 
     // ramdom outro
-    text += ' not commited today! This makes Stakhanov angry!'
+    text += ' not committed today! This makes Stakhanov angry!'
   }
 
   const postData =
@@ -139,11 +132,18 @@ function shamePeople() {
 }
 
 function githubToSlackUsernames(githubUser) {
-  return (
-    '<@' +
-    usernames.filter(person => person.github === githubUser)[0].slack +
-    '>'
-  )
+  return '<@' + usernames.filter(person => person.github === githubUser)[0].slack + '>'
+}
+
+function makeDate() {
+  const now = new Date(new Date().getTime() - 6 * 60 * 60)
+  const month = ('0' + (now.getMonth() + 1)).slice(-2)
+  const day = ('0' + now.getDate()).slice(-2)
+  return now.getFullYear() + '-' + month + '-' + now.getDate()
+}
+
+function hasHave(array) {
+  return array.length === 1 ? ' has' : ' have'
 }
 
 for (let i = 0; i < usernames.length; i++) {
