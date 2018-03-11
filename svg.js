@@ -72,22 +72,22 @@ function shamePeople() {
   const day = now2.getDay()
   console.log(day)
 
-  // has/have
-  const hasHave = guiltyPeople.length === 1 ? ' has' : ' have'
-
   let text = ''
   // let's go through the three cases, no one, or someome, or many have not commited
   if (!guiltyPeople.length) {
-    text = 'Privet! Everyone has commited today! I am proud of my comrades!'
+    text = 'Privet! Everyone has committed today! I am proud of my comrades!'
   } else if (day === 0 || day === 6) {
+    let hasv = hasHave(
+      usernames.map(usernameObj => '<@' + usernameObj.slack + '>').filter(slack => !guiltyPeople.includes(slack))
+    )
     text +=
       "It's the week end! And still, " +
       usernames
         .map(usernameObj => '<@' + usernameObj.slack + '>')
         .filter(slack => !guiltyPeople.includes(slack))
         .join(', ') +
-      hasHave
-    ;(' commited! Stakhanov is proud!')
+      hasv +
+      ' committed! Stakhanov is proud!'
   } else {
     // random intro
     text = 'Shame! '
@@ -95,10 +95,10 @@ function shamePeople() {
     text += guiltyPeople.join(', ')
 
     // has or have
-    text += hasHave
+    text += hasHave(guiltyPeople)
 
     // ramdom outro
-    text += ' not commited today! This makes Stakhanov angry!'
+    text += ' not committed today! This makes Stakhanov angry!'
   }
 
   const postData =
@@ -140,11 +140,7 @@ function shamePeople() {
 }
 
 function githubToSlackUsernames(githubUser) {
-  return (
-    '<@' +
-    usernames.filter(person => person.github === githubUser)[0].slack +
-    '>'
-  )
+  return '<@' + usernames.filter(person => person.github === githubUser)[0].slack + '>'
 }
 
 function makeDate() {
@@ -152,6 +148,10 @@ function makeDate() {
   const month = ('0' + (now.getMonth() + 1)).slice(-2)
   const day = ('0' + now.getDate()).slice(-2)
   return now.getFullYear() + '-' + month + '-' + now.getDate()
+}
+
+function hasHave(array) {
+  return array.length === 1 ? ' has' : ' have'
 }
 
 for (let i = 0; i < usernames.length; i++) {
