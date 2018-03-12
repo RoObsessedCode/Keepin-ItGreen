@@ -71,6 +71,13 @@ function shamePeople() {
     let hasv = hasHave(
       usernames.map(usernameObj => '<@' + usernameObj.slack + '>').filter(slack => !guiltyPeople.includes(slack))
     )
+    if (
+      usernames.map(usernameObj => '<@' + usernameObj.slack + '>').filter(slack => !guiltyPeople.includes(slack))
+        .length === 0
+    ) {
+      console.log('no commits, but week end')
+      return
+    }
     text +=
       "It's the week end! And still, " +
       usernames
