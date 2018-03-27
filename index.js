@@ -61,7 +61,6 @@ function checkUser(username) {
 function shamePeople() {
   const now2 = new Date(new Date().getTime() - 6 * 60 * 60)
   const day = now2.getDay()
-  console.log(day)
 
   let text = ''
   // let's go through the three cases, no one, or someone, or many have not committed
@@ -102,9 +101,9 @@ function shamePeople() {
   const postData =
     'payload=' +
     JSON.stringify({
-      text: text
+        text: text,
+        channel: '#1801-fsa-ny-fellows'
     })
-  // channel: '#1801-fsa-ny-fellows'
 
   var options = {
     host: 'hooks.slack.com',
